@@ -1,0 +1,18 @@
+<div class="sidenav">
+  <mat-toolbar>Lists</mat-toolbar>
+  <mat-nav-list>
+    <button *ngFor="let list of this.lists" mat-list-item (click)="this.listChanged.emit(list.id!)" [ngClass]="(currentLisstId == list.id ? 'mat-list-item-focus' : '')">{{list.title}}</button>
+  </mat-nav-list>
+  <div class="bottom">
+    <h3>Add new list</h3>
+    <form>
+      <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input matInput type="text" #title>
+        <button mat-icon-button matSuffix (click)="onClickAddChecklist(     )" [attr.aria-label]="'Add new list'" >
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-form-field>
+    </form>
+  </div>
+</div>

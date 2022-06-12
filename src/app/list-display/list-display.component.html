@@ -1,0 +1,30 @@
+<ng-container *ngIf="list$ | async as list; else loading">
+  <div class="title">
+    <h2>{{list?.title}}</h2>
+    <span>
+      <button mat-icon-button (click)="resetList()"><mat-icon>restart_alt</mat-icon></button>
+      <button mat-icon-button (click)="editMode = !editMode"><mat-icon>{{editMode ? "check" : "edit"}}</mat-icon></button>
+    </span>
+  </div>
+  <mat-list>
+    <mat-list-item *ngFor="let item of (this.listItems$ | async)">
+      <mat-checkbox [checked]="item.done ?? false" (change)="onStatusToggle(item.id!)">{{ item.title }}</mat-checkbox>
+      <button mat-icon-button *ngIf="editMode" (click)="onDeleteChecklistItem(item.id!)"><mat-icon>delete</mat-icon></button>
+    </mat-list-item>
+    <mat-list-item *ngIf="editMode">
+      <form style="width: 100%;">
+        <mat-form-field style="width: 100%;">
+          <mat-label>Title</mat-label>
+          <input matInput type="text" #title>
+          <button mat-icon-button matSuffix (click)="onAddChecklistItem()" [attr.aria-label]="'Add new item'" >
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-form-field>
+      </form>
+    </mat-list-item>
+  </mat-list>
+</ng-container>
+
+<ng-template #loading>
+  Loading...
+</ng-template>
