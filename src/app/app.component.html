@@ -1,9 +1,9 @@
 <mat-sidenav-container class="sidenav-container" autosize>
   <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [attr.role]="mobileMenu ? 'dialog' : 'navigation'"
+      [mode]="mobileMenu ? 'over' : 'side'"
       [opened]="true">
-    <app-sidenav [lists]="this.checklists$ | async" (listChanged)="onListChanged($event); (isHandset$ | async) && drawer.close();" [currentLisstId]="currentListId"></app-sidenav>
+    <app-sidenav [lists]="this.checklists$ | async" (listChanged)="onListChanged($event); mobileMenu && drawer.close();" [currentLisstId]="currentListId"></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
@@ -12,7 +12,7 @@
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
+        *ngIf="mobileMenu">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>PreFlight</span>

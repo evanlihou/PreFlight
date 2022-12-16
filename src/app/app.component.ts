@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AppDB, Checklist, ChecklistItem} from "../db";
 import {liveQuery, Observable as DexieObservable} from "dexie";
-import { map, Observable, shareReplay } from 'rxjs';
+import { map, tap, Observable, shareReplay } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
@@ -15,11 +15,14 @@ export class AppComponent implements OnInit {
   public currentListId?: number;
   public currentListItems$?: DexieObservable<ChecklistItem[]>;
 
+  public mobileMenu: boolean = false;
+
   title = 'PreFlight';
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   .pipe(
     map(result => result.matches),
+    tap(result => this.mobileMenu = result),
     shareReplay()
   );
 
