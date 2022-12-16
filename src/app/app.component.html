@@ -3,7 +3,7 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="true">
-    <app-sidenav [lists]="this.checklists$ | async" (listChanged)="onListChanged($event); drawer.close();" [currentLisstId]="currentListId"></app-sidenav>
+    <app-sidenav [lists]="this.checklists$ | async" (listChanged)="onListChanged($event); (isHandset$ | async) && drawer.close();" [currentLisstId]="currentListId"></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
