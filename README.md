@@ -1,6 +1,10 @@
 # PreFlight
 
-## This app is a work in progress.
+This app is a work in progress.
+
+A simple <abbr title="Progressive Web App">PWA</abbr> that can store reusable checklists. Add or reorder items on the fly, mark them complete as you go, and once you're done set them all back to incomplete at once. No login required (or possible!), your data never leaves your device, and it's mobile-friendly.
+
+---
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.0.
 
