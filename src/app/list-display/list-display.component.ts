@@ -38,6 +38,9 @@ export class ListDisplayComponent implements OnInit, OnDestroy, OnChanges {
       this.listItemsSub = this.listItems$.subscribe(items => {
         this.listItems = items;
         this.maxOrdinal = Math.max(...items.map(i => i.ordinal ?? 0));
+        if (items.length === 0 && !this.editMode) {
+          this.editMode = true;
+        }
       });
       this.list$ = liveQuery(() => this.db.checklists.get(this.listId!));
       this.editMode = false;
