@@ -1,4 +1,5 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppDB, Checklist } from 'src/db';
 
 @Component({
@@ -13,14 +14,24 @@ export class SidenavComponent implements OnInit {
   @Input()
   public lists: Checklist[] | null = null;
 
-  @Input() public currentLisstId?: number;
+  @Input() public currentListId?: number;
 
   @ViewChild('title') public title!: ElementRef<HTMLInputElement>;
 
-  constructor(private db: AppDB) { }
+  constructor(private db: AppDB, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    // this.router.isActive
+    // this.route.paramMap.subscribe(params => {
+    //   console.log(params);
+    //   if (!params.has('listId') || !params.get('listId')) return;
+    //   const id = Number.parseInt('listId');
+    //   this.currentListId = id;
+    // });
+  }
 
+  public isIdActive(id: Number) {
+    return this.router.isActive(`list/${id}`, {paths: 'exact', queryParams: 'exact', fragment: 'ignored', matrixParams: 'ignored'});
   }
 
   async onClickAddChecklist() {
@@ -31,5 +42,11 @@ export class SidenavComponent implements OnInit {
     });
     this.title.nativeElement.value = '';
     return true;
+  }
+
+  async onSelectChecklist(id: number) {
+    this.router.navigate(['/list', id]);
+    this.currentListId = id;
+    this.listChanged.emit(id);
   }
 }

@@ -8,4 +8,19 @@
     padding-left: 2em;
     padding-right: 2em;
   }
+
+  @keyframes slideInFromLeft {
+    0% {
+      width: 0;
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  mat-icon {
+    /* This section calls the slideInFromLeft animation we defined above */
+    animation: 0.25s ease-out 0s 1 slideInFromLeft;
+  }
 }

@@ -9,6 +9,7 @@ export interface ChecklistItem {
   id?: number;
   checklistId: number;
   title: string;
+  ordinal?: number;
   done?: boolean;
 }
 

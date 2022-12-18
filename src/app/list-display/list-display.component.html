@@ -6,25 +6,33 @@
       <button mat-icon-button (click)="editMode = !editMode"><mat-icon>{{editMode ? "check" : "edit"}}</mat-icon></button>
     </span>
   </div>
-  <mat-list>
-    <mat-list-item *ngFor="let item of (this.listItems$ | async)">
-      <mat-checkbox [checked]="item.done ?? false" (change)="onStatusToggle(item.id!)">{{ item.title }}</mat-checkbox>
-      <button mat-icon-button *ngIf="editMode" (click)="onDeleteChecklistItem(item.id!)"><mat-icon>delete</mat-icon></button>
-    </mat-list-item>
-    <mat-list-item *ngIf="editMode">
-      <form style="width: 100%;">
-        <mat-form-field style="width: 100%;">
-          <mat-label>Title</mat-label>
-          <input matInput type="text" #title>
-          <button mat-icon-button matSuffix (click)="onAddChecklistItem()" [attr.aria-label]="'Add new item'" >
-            <mat-icon>add</mat-icon>
-          </button>
-        </mat-form-field>
-      </form>
-    </mat-list-item>
+  <mat-list cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="onDrop($event)">
+    <ng-container *ngIf="!editMode; else editItem">
+      <mat-list-item *ngFor="let item of this.listItems">
+        <mat-checkbox [checked]="item.done ?? false" (change)="onStatusToggle(item.id!)">{{ item.title }}</mat-checkbox>
+      </mat-list-item>
+    </ng-container>
+    <ng-template #editItem>
+      <mat-list-item cdkDrag *ngFor="let item of this.listItems">
+        <mat-icon cdkDragHandle style="padding-right: 0.5em; cursor: grab;">drag_handle</mat-icon>
+        {{ item.title }}
+        <button mat-icon-button *ngIf="editMode" (click)="onDeleteChecklistItem(item.id!)"><mat-icon>delete</mat-icon></button>
+      </mat-list-item>
+      <mat-list-item>
+        <form style="width: 100%;">
+          <mat-form-field style="width: 100%;">
+            <mat-label>New Item</mat-label>
+            <input matInput type="text" #title>
+            <button mat-icon-button matSuffix (click)="onAddChecklistItem()" [attr.aria-label]="'Add new item'" >
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-form-field>
+        </form>
+      </mat-list-item>
+    </ng-template>
   </mat-list>
 </ng-container>
 
 <ng-template #loading>
-  Loading...
+  <mat-progress-spinner></mat-progress-spinner>
 </ng-template>

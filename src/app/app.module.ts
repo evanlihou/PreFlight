@@ -14,16 +14,20 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatListModule } from '@angular/material/list';
 import { ListDisplayComponent } from './list-display/list-display.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidenavComponent,
     ListDisplayComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,10 @@ import { ListDisplayComponent } from './list-display/list-display.component';
     MatInputModule,
     LayoutModule,
     MatListModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatProgressSpinnerModule,
+    // CDK
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AppDB, Checklist, ChecklistItem} from "../db";
 import {liveQuery, Observable as DexieObservable} from "dexie";
-import { map, tap, Observable, shareReplay } from 'rxjs';
+import { map, Observable, shareReplay } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-root',
@@ -17,12 +18,13 @@ export class AppComponent implements OnInit {
 
   public mobileMenu: boolean = false;
 
-  title = 'PreFlight';
+  @ViewChild("drawer") drawer?: MatSidenav;
+
+  title = 'Checklists'; //'PreFlight';
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   .pipe(
     map(result => result.matches),
-    tap(result => this.mobileMenu = result),
     shareReplay()
   );
 
@@ -31,11 +33,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.checklists$ = liveQuery(() => this.db.checklists.toArray());
-  }
-
-  public onListChanged(id: number): void {
-    this.currentListId = id;
-
-    console.log('change', id);
+    this.isHandset$.subscribe(isHandset => {
+      this.mobileMenu = isHandset;
+      if (!isHandset && !this.drawer?.opened) this.drawer?.open();
+    });
   }
 }

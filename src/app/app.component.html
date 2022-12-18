@@ -3,7 +3,7 @@
       [attr.role]="mobileMenu ? 'dialog' : 'navigation'"
       [mode]="mobileMenu ? 'over' : 'side'"
       [opened]="true">
-    <app-sidenav [lists]="this.checklists$ | async" (listChanged)="onListChanged($event); mobileMenu && drawer.close();" [currentLisstId]="currentListId"></app-sidenav>
+    <app-sidenav [lists]="this.checklists$ | async" (listChanged)="mobileMenu && drawer.close();" [currentListId]="currentListId"></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
@@ -15,16 +15,10 @@
         *ngIf="mobileMenu">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>PreFlight</span>
+      <span>{{title}}</span>
     </mat-toolbar>
     <div class="mainContent">
-      <ng-container *ngIf="currentListId; else emptyState">
-        <app-list-display [listId]="currentListId"></app-list-display>
-      </ng-container>
-
-      <ng-template #emptyState>
-        <h3>Select a list from the sidebar...</h3>
-      </ng-template>
+      <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
