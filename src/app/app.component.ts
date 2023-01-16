@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 
   @ViewChild("drawer") drawer?: MatSidenav;
 
-  title = 'Checklists'; //'PreFlight';
+  title = 'PreFlight';
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   .pipe(
