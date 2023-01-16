@@ -1,7 +1,15 @@
 .sidenav {
   height: 100%;
+  min-width: 270px;
+  max-width: 80vw;
   display: flex;
   flex-direction: column;
+
+  .flex-between {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
 
   .bottom {
     margin-top: auto;
@@ -22,5 +30,12 @@
   mat-icon {
     /* This section calls the slideInFromLeft animation we defined above */
     animation: 0.25s ease-out 0s 1 slideInFromLeft;
+      vertical-align: -0.2em; /*Change this to adjust the icon*/
+  }
+
+  .navbar-item {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
   }
 }

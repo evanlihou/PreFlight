@@ -1,4 +1,4 @@
-<ng-container *ngIf="list$ | async as list; else loading">
+<ng-container *ngIf="list$ | async as list; else loading" [class]="(editMode ? 'editMode' : '')">
   <div class="title">
     <h2>{{list?.title}}</h2>
     <span>
@@ -13,11 +13,13 @@
       </mat-list-item>
     </ng-container>
     <ng-template #editItem>
-      <mat-list-item cdkDrag *ngFor="let item of this.listItems">
-        <mat-icon cdkDragHandle style="padding-right: 0.5em; cursor: grab;">drag_handle</mat-icon>
-        {{ item.title }}
-        <button mat-icon-button *ngIf="editMode" (click)="onDeleteChecklistItem(item.id!)"><mat-icon>delete</mat-icon></button>
-      </mat-list-item>
+      <div class="editMode">
+        <mat-list-item cdkDrag *ngFor="let item of this.listItems">
+          <mat-icon cdkDragHandle style="padding-right: 0.5em; cursor: grab;">drag_handle</mat-icon>
+          {{ item.title }}
+          <button mat-icon-button *ngIf="editMode" (click)="onDeleteChecklistItem(item.id!)"><mat-icon>delete</mat-icon></button>
+        </mat-list-item>
+      </div>
       <mat-list-item>
         <form style="width: 100%;">
           <mat-form-field style="width: 100%;">

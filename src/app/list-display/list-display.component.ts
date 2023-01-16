@@ -1,9 +1,11 @@
 import { CdkDragSortEvent, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, ElementRef, Input, OnChanges, OnInit, OnDestroy, SimpleChanges, ViewChild, AfterViewInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatList } from '@angular/material/list';
 import { ActivatedRoute } from '@angular/router';
 import { liveQuery, Observable, Subscription } from 'dexie';
 import { AppDB, Checklist, ChecklistItem } from 'src/db';
+import { ConfirmationDialogComponent, ConfirmationDialogData } from '../common/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-list-display',
@@ -25,7 +27,7 @@ export class ListDisplayComponent implements OnInit, OnDestroy, OnChanges {
 
   public editMode = false;
 
-  constructor(private db: AppDB, private route: ActivatedRoute) { }
+  constructor(private db: AppDB, private route: ActivatedRoute, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -66,9 +68,22 @@ export class ListDisplayComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public async resetList() {
-    if (!this.listId || !confirm("Are you sure you want to mark all items as incomplete?")) return false;
+    if (!this.listId) return false;
 
-    await this.db.checklistItems.where('checklistId').equals(this.listId!).modify({done: false});
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: "Reset List",
+        content: "Are you sure you want to mark all items as incomplete?",
+        isDestructive: true
+      } as ConfirmationDialogData
+    });
+
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result !== true) return false;
+
+      await this.db.checklistItems.where('checklistId').equals(this.listId!).modify({done: false});
+      return true;
+    });
 
     return true;
   }

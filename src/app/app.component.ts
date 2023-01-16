@@ -38,4 +38,16 @@ export class AppComponent implements OnInit {
       if (!isHandset && !this.drawer?.opened) this.drawer?.open();
     });
   }
+
+  onClickShare() {
+    if (navigator.share) {
+      navigator.share({
+        title: 'web.dev',
+        text: 'Check out web.dev.',
+        url: document.location.href,
+      })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing', error));
+    }
+  }
 }

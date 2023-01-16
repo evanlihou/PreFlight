@@ -1,9 +1,18 @@
 <div class="sidenav">
-  <mat-toolbar>Lists</mat-toolbar>
+  <mat-toolbar>
+    <div class="flex-between">
+      <span>Lists</span>
+      <span><button mat-icon-button (click)="editMode = !editMode"><mat-icon>{{editMode ? "check" : "edit"}}</mat-icon></button></span>
+    </div>
+  </mat-toolbar>
   <mat-nav-list>
-    <button *ngFor="let list of this.lists" mat-list-item (click)="onSelectChecklist(list.id!)" [ngClass]="(isIdActive(list.id!) ? 'mat-list-item-focus' : '')"><mat-icon *ngIf="isIdActive(list.id!)">arrow_right</mat-icon>{{list.title}}</button>
+    <mat-list-item *ngFor="let list of this.lists" mat-list-item (click)="onSelectChecklist(list.id!)" [ngClass]="(isIdActive(list.id!) ? 'mat-list-item-focus' : '')">
+      <span class="navbar-item"><span><mat-icon *ngIf="isIdActive(list.id!)">arrow_right</mat-icon>
+      {{list.title}}</span>
+      <mat-icon *ngIf="editMode" (click)="onClickDelete(list.id!, $event)">delete</mat-icon></span>
+    </mat-list-item>
   </mat-nav-list>
-  <div class="bottom">
+  <div class="bottom" *ngIf="editMode">
     <h3>Add new list</h3>
     <form>
       <mat-form-field>

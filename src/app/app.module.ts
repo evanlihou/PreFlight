@@ -21,6 +21,9 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatListModule } from '@angular/material/list';
 import { ListDisplayComponent } from './list-display/list-display.component';
 import { HomeComponent } from './home/home.component';
+import { ConfirmationDialogComponent } from './common/confirmation-dialog/confirmation-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CommonModule } from './common/common.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,7 @@ import { HomeComponent } from './home/home.component';
     SidenavComponent,
     ListDisplayComponent,
     HomeComponent,
+    //ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,8 +55,11 @@ import { HomeComponent } from './home/home.component';
     MatListModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
     // CDK
-    DragDropModule
+    DragDropModule,
+    // Custom
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
