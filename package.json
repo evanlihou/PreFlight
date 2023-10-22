@@ -7,7 +7,7 @@
     "build": "ng build && npm run sentry:sourcemaps",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org evanlihoucom --project preflight ./dist && sentry-cli sourcemaps upload --org evanlihoucom --project preflight ./dist"
+    "sentry:sourcemaps": "npx @sentry/cli sourcemaps inject --org evanlihoucom --project preflight ./dist && npx @sentry/cli sourcemaps upload --org evanlihoucom --project preflight ./dist"
   },
   "private": true,
   "dependencies": {
@@ -32,6 +32,7 @@
     "@angular-devkit/build-angular": "^14.0.0",
     "@angular/cli": "~14.0.0",
     "@angular/compiler-cli": "^14.0.0",
+    "@sentry/cli": "^2.21.2",
     "@types/jasmine": "~4.0.0",
     "jasmine-core": "~4.1.0",
     "karma": "~6.3.0",
